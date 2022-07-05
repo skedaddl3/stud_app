@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
-import 'login.dart' show SecondRoute;
+import 'package:stud_app/signup.dart' show Signup;
+import 'package:stud_app/login.dart' show SecondRoute;
 
 void main() {
   runApp(
@@ -74,6 +75,11 @@ class LogIn extends StatelessWidget {
                   style: linkStyle,
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
+                      // ignore: avoid_print.
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Signup()),
+                      );
                       // ignore: avoid_print
                       print('Sign Up/Report a Problem');
                     }),
