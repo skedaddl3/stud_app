@@ -1,12 +1,11 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'login.dart' show SecondRoute;
 
 void main() {
   runApp(
     MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Student Demo',
       theme: ThemeData(
         // ignore: prefer_const_constructors
         appBarTheme: AppBarTheme(color: const Color.fromRGBO(252, 252, 252, 1)),
@@ -48,7 +47,7 @@ class LogIn extends StatelessWidget {
       children: <Widget>[
         SizedBox(
             child: Image.asset('assets/images/Montfort-removebg-preview.png'),
-            width: 220),
+            width: 200),
         const Text("\n\n"),
         RichText(
           textAlign: TextAlign.center,
@@ -61,7 +60,13 @@ class LogIn extends StatelessWidget {
                   style: linkStyle,
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
-                      print('Terms of Service"');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SecondRoute()),
+                      );
+                      // ignore: avoid_print
+                      print('login page');
                     }),
               const TextSpan(text: '\n\nHaving Troubles Logging In? '),
               TextSpan(
@@ -69,12 +74,34 @@ class LogIn extends StatelessWidget {
                   style: linkStyle,
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
-                      print('Privacy Policy"');
+                      // ignore: avoid_print
+                      print('Sign Up/Report a Problem');
                     }),
             ],
           ),
         )
       ],
+    );
+  }
+}
+
+class FirstRoute extends StatelessWidget {
+  const FirstRoute({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('First Route'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          child: const Text('Open route'),
+          onPressed: () {
+            // Navigate to second route when tapped.
+          },
+        ),
+      ),
     );
   }
 }
