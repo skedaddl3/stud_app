@@ -3,6 +3,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:stud_app/dashboard.dart';
 
 class Signup extends StatefulWidget {
   const Signup({Key? key}) : super(key: key);
@@ -24,8 +25,8 @@ class _SignupState extends State<Signup> {
   ];
 
   final List<String> itemsGender = [
-    'Male',
-    'Female',
+    'Male ♂️',
+    'Female ♀️',
   ];
   String? selectedValueSection;
   String? selectedValueGender;
@@ -436,19 +437,28 @@ class _SignupState extends State<Signup> {
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                  child: Container(
-                    padding: const EdgeInsets.all(15.0),
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'Sign Up',
-                        style: TextStyle(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Dashboard()),
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(15.0),
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Sign Up',
+                          style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
-                            fontSize: 20.0),
+                            fontSize: 20.0,
+                          ),
+                        ),
                       ),
                     ),
                   ),
