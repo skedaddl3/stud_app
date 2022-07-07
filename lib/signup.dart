@@ -11,20 +11,25 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
+  final List<String> itemsSection = [
+    'Section 1',
+    'Section 2',
+    'Section 3',
+    'Section 4',
+    'Section 5',
+    'Section 6',
+    'Section 7',
+    'Section 8',
+  ];
+
+  final List<String> itemsGender = [
+    'Male',
+    'Female',
+  ];
+  String? selectedValueSection;
+  String? selectedValueGender;
   @override
   Widget build(BuildContext context) {
-    final List<String> items = [
-      'Section 1',
-      'Section 2',
-      'Section 3',
-      'Section 4',
-      'Section 5',
-      'Section 6',
-      'Section 7',
-      'Section 8',
-    ];
-    String? selectedValue;
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -41,7 +46,7 @@ class _SignupState extends State<Signup> {
         child: SingleChildScrollView(
           child: Center(
             child: Column(
-              //mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(height: 10),
                 const Text(
@@ -52,20 +57,20 @@ class _SignupState extends State<Signup> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  'Student Number are auto generated.',
-                  // ignore: unnecessary_const
-                  style: const TextStyle(
-                    fontSize: 20,
-                  ),
-                ),
-                const SizedBox(height: 20.0),
+                // const Text(
+                //   'Student Number are auto generated.',
+                //   // ignore: unnecessary_const
+                //   style: const TextStyle(
+                //     fontSize: 15,
+                //   ),
+                // ),
+                // const SizedBox(height: 10.0),
                 //email textfield
 
                 // Full Name TextField
 
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 55.0),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.grey[200],
@@ -76,12 +81,13 @@ class _SignupState extends State<Signup> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20.0),
                       child: const TextField(
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.name,
                         decoration: InputDecoration(
                             border: InputBorder.none,
+                            icon: Icon(Icons.person),
                             hintText: 'Full Name (e.g. Juan Dela Cruz)'),
                         style: TextStyle(
-                          fontSize: 18.0,
+                          fontSize: 14.0,
                         ),
                       ),
                     ),
@@ -93,21 +99,24 @@ class _SignupState extends State<Signup> {
                 // Section Text Field
 
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 55.0),
                   // ignore: prefer_const_constructors
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
+                    padding: const EdgeInsets.only(left: 0.0),
                     child: DropdownButton2(
                       isExpanded: true,
                       hint: Row(
                         children: const [
+                          SizedBox(
+                            width: 7,
+                          ),
                           Icon(
-                            Icons.list_alt_rounded,
-                            size: 16,
-                            color: Colors.black,
+                            Icons.list,
+                            size: 20,
+                            color: Color.fromARGB(221, 94, 91, 91),
                           ),
                           SizedBox(
-                            width: 4,
+                            width: 20,
                           ),
                           Expanded(
                             child: Text(
@@ -115,64 +124,89 @@ class _SignupState extends State<Signup> {
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.normal,
-                                color: Colors.black,
+                                color: Color.fromARGB(221, 44, 43, 43),
                               ),
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ],
                       ),
-                      items: items
+                      items: itemsSection
                           .map((item) => DropdownMenuItem<String>(
                                 value: item,
                                 child: Text(
                                   item,
                                   style: const TextStyle(
                                     fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
+                                    fontWeight: FontWeight.normal,
+                                    color: Color.fromARGB(221, 44, 43, 43),
                                   ),
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ))
                           .toList(),
-                      value: selectedValue,
+                      value: selectedValueSection,
                       onChanged: (value) {
                         setState(() {
-                          selectedValue = value as String;
+                          selectedValueGender = value as String;
                         });
                       },
-                      icon: const Icon(
-                        Icons.arrow_forward_ios_outlined,
-                      ),
-                      iconSize: 14,
+                      icon: const Icon(Icons.arrow_drop_down),
+                      iconSize: 20,
                       iconEnabledColor: Colors.blue,
                       iconDisabledColor: Colors.grey,
                       buttonHeight: 50,
-                      buttonWidth: 160,
+                      buttonWidth: 250,
                       buttonPadding: const EdgeInsets.only(left: 14, right: 14),
                       buttonDecoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(14),
+                        borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: Colors.black26,
+                          color: Colors.blue,
                         ),
-                        color: Colors.white,
+                        color: Colors.grey[200],
                       ),
                       buttonElevation: 2,
                       itemHeight: 40,
                       itemPadding: const EdgeInsets.only(left: 14, right: 14),
-                      dropdownMaxHeight: 200,
-                      dropdownWidth: 200,
+                      dropdownMaxHeight: 100,
+                      dropdownWidth: 300,
                       dropdownPadding: null,
                       dropdownDecoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(14),
-                        color: Colors.redAccent,
+                        color: Colors.grey[200],
                       ),
-                      dropdownElevation: 8,
-                      scrollbarRadius: const Radius.circular(40),
-                      scrollbarThickness: 6,
+                      dropdownElevation: 0,
+                      scrollbarRadius: const Radius.circular(14),
+                      scrollbarThickness: 4,
                       scrollbarAlwaysShow: true,
                       offset: const Offset(-20, 0),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 10.0),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 55.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      border: Border.all(color: Colors.blue),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    // ignore: prefer_const_constructors
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: const TextField(
+                        keyboardType: TextInputType.streetAddress,
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            icon: Icon(Icons.location_on),
+                            hintText: 'Complete Address'),
+                        style: TextStyle(
+                          fontSize: 14.0,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -182,7 +216,7 @@ class _SignupState extends State<Signup> {
                 // Complete Address Textfield
 
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 55.0),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.grey[200],
@@ -193,12 +227,13 @@ class _SignupState extends State<Signup> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20.0),
                       child: const TextField(
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.streetAddress,
                         decoration: InputDecoration(
                             border: InputBorder.none,
+                            icon: Icon(Icons.location_on),
                             hintText: 'Complete Address'),
                         style: TextStyle(
-                          fontSize: 18.0,
+                          fontSize: 14.0,
                         ),
                       ),
                     ),
@@ -210,24 +245,92 @@ class _SignupState extends State<Signup> {
                 // Contact Number Textfield
 
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      border: Border.all(color: Colors.blue),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    // ignore: prefer_const_constructors
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: const TextField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                            border: InputBorder.none, hintText: 'Gender'),
-                        style: TextStyle(
-                          fontSize: 18.0,
-                        ),
+                  padding: const EdgeInsets.symmetric(horizontal: 55.0),
+                  // ignore: prefer_const_constructors
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 0.0),
+                    child: DropdownButton2(
+                      isExpanded: true,
+                      hint: Row(
+                        children: const [
+                          SizedBox(
+                            width: 7,
+                          ),
+                          Icon(
+                            Icons.list,
+                            size: 20,
+                            color: Color.fromARGB(221, 94, 91, 91),
+                          ),
+                          // Icon(
+                          //   Icons.male_rounded,
+                          //   size: 10,
+                          //   color: Color.fromARGB(221, 94, 91, 91),
+                          // ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Expanded(
+                            child: Text(
+                              'Select Gender',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal,
+                                color: Color.fromARGB(221, 44, 43, 43),
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
                       ),
+                      items: itemsGender
+                          .map((item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(
+                                  item,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
+                                    color: Color.fromARGB(221, 44, 43, 43),
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ))
+                          .toList(),
+                      value: selectedValueGender,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedValueGender = value as String;
+                        });
+                      },
+                      icon: const Icon(Icons.arrow_drop_down),
+                      iconSize: 20,
+                      iconEnabledColor: Colors.blue,
+                      iconDisabledColor: Colors.grey,
+                      buttonHeight: 50,
+                      buttonWidth: 250,
+                      buttonPadding: const EdgeInsets.only(left: 14, right: 14),
+                      buttonDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: Colors.blue,
+                        ),
+                        color: Colors.grey[200],
+                      ),
+                      buttonElevation: 2,
+                      itemHeight: 40,
+                      itemPadding: const EdgeInsets.only(left: 14, right: 14),
+                      dropdownMaxHeight: 100,
+                      dropdownWidth: 300,
+                      dropdownPadding: null,
+                      dropdownDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                        color: Colors.grey[200],
+                      ),
+                      dropdownElevation: 0,
+                      scrollbarRadius: const Radius.circular(14),
+                      scrollbarThickness: 4,
+                      scrollbarAlwaysShow: true,
+                      offset: const Offset(-20, 0),
                     ),
                   ),
                 ),
@@ -237,7 +340,7 @@ class _SignupState extends State<Signup> {
                 // Contact Number Textfield
 
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 55.0),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.grey[200],
@@ -248,12 +351,13 @@ class _SignupState extends State<Signup> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20.0),
                       child: const TextField(
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.phone,
                         decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: 'Contact Number (e.g. 09123456789)'),
+                            icon: Icon(Icons.phone_rounded),
+                            hintText: 'Contact Number'),
                         style: TextStyle(
-                          fontSize: 18.0,
+                          fontSize: 14.0,
                         ),
                       ),
                     ),
@@ -263,7 +367,7 @@ class _SignupState extends State<Signup> {
                 const SizedBox(height: 10.0),
 
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 55.0),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.grey[200],
@@ -278,9 +382,10 @@ class _SignupState extends State<Signup> {
                         obscuringCharacter: '●',
                         decoration: InputDecoration(
                             border: InputBorder.none,
+                            icon: Icon(Icons.security),
                             hintText: ' Create a Password'),
                         style: TextStyle(
-                          fontSize: 18.0,
+                          fontSize: 14.0,
                         ),
                       ),
                     ),
@@ -292,7 +397,7 @@ class _SignupState extends State<Signup> {
                 // Confirm Password Textfield
 
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 55.0),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.grey[200],
@@ -307,9 +412,10 @@ class _SignupState extends State<Signup> {
                         obscuringCharacter: '●',
                         decoration: InputDecoration(
                             border: InputBorder.none,
+                            icon: Icon(Icons.verified_user_outlined),
                             hintText: ' Confirm Password'),
                         style: TextStyle(
-                          fontSize: 18.0,
+                          fontSize: 14.0,
                         ),
                       ),
                     ),
