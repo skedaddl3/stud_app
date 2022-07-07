@@ -102,20 +102,20 @@ class _SignupState extends State<Signup> {
                       hint: Row(
                         children: const [
                           Icon(
-                            Icons.list,
+                            Icons.list_alt_rounded,
                             size: 16,
-                            color: Colors.yellow,
+                            color: Colors.black,
                           ),
                           SizedBox(
                             width: 4,
                           ),
                           Expanded(
                             child: Text(
-                              'Select Item',
+                              'Select Section',
                               style: TextStyle(
                                 fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.yellow,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.black,
                               ),
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -146,7 +146,7 @@ class _SignupState extends State<Signup> {
                         Icons.arrow_forward_ios_outlined,
                       ),
                       iconSize: 14,
-                      iconEnabledColor: Colors.yellow,
+                      iconEnabledColor: Colors.blue,
                       iconDisabledColor: Colors.grey,
                       buttonHeight: 50,
                       buttonWidth: 160,
@@ -156,7 +156,7 @@ class _SignupState extends State<Signup> {
                         border: Border.all(
                           color: Colors.black26,
                         ),
-                        color: Colors.redAccent,
+                        color: Colors.white,
                       ),
                       buttonElevation: 2,
                       itemHeight: 40,
