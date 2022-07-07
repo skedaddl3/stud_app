@@ -2,6 +2,7 @@
 
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Signup extends StatefulWidget {
   const Signup({Key? key}) : super(key: key);
@@ -28,6 +29,10 @@ class _SignupState extends State<Signup> {
   ];
   String? selectedValueSection;
   String? selectedValueGender;
+
+  late DateTime _selectedDate;
+  final TextEditingController _textEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -226,15 +231,20 @@ class _SignupState extends State<Signup> {
                     // ignore: prefer_const_constructors
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20.0),
-                      child: const TextField(
+                      child: TextField(
                         keyboardType: TextInputType.streetAddress,
                         decoration: InputDecoration(
                             border: InputBorder.none,
-                            icon: Icon(Icons.location_on),
-                            hintText: 'Complete Address'),
+                            icon: Icon(Icons.calendar_today),
+                            hintText: 'Birth Date'),
                         style: TextStyle(
                           fontSize: 14.0,
                         ),
+                        focusNode: AlwaysDisabledFocusNode(),
+                        controller: _textEditingController,
+                        onTap: () {
+                          _selectDate(context);
+                        },
                       ),
                     ),
                   ),
@@ -467,4 +477,44 @@ class _SignupState extends State<Signup> {
       ),
     );
   }
+
+  _selectDate(BuildContext context) async {
+    DateTime? newSelectedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime(2000, 1, 1, 17, 30),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2040),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: Colors.blue, // header background color
+              onPrimary: Colors.white, // header text color
+              onSurface: Color.fromARGB(255, 16, 219, 22), // body text color
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                primary: Colors.blue, // button text color
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (newSelectedDate != null) {
+      _selectedDate = newSelectedDate;
+      _textEditingController
+        ..text = DateFormat.yMMMd().format(_selectedDate)
+        ..selection = TextSelection.fromPosition(TextPosition(
+            offset: _textEditingController.text.length,
+            affinity: TextAffinity.upstream));
+    }
+  }
+}
+
+class AlwaysDisabledFocusNode extends FocusNode {
+  @override
+  bool get hasFocus => false;
 }
