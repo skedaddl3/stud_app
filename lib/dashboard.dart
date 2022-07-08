@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:stud_app/accounts.dart';
 import 'package:stud_app/course_details2.dart';
 import 'package:stud_app/course_details3.dart';
 import 'package:stud_app/report_card.dart';
@@ -76,11 +77,19 @@ class _DashboardState extends State<Dashboard> {
             child: Container(
               margin: const EdgeInsets.all(8),
               child: CircleAvatar(
-                backgroundImage:
-                    const NetworkImage('https://i.pravatar.cc/100'),
+                backgroundImage: Image.asset('assets/images/user_icon1.png')
+                    .image, //Image.asset('assets/images/profile.png'),
                 backgroundColor: Colors.grey[300],
               ),
             ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const Accounts(),
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -147,7 +156,7 @@ class _DashboardState extends State<Dashboard> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.all(15),
+                                padding: const EdgeInsets.all(10),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
