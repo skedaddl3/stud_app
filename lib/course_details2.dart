@@ -2,27 +2,26 @@
 
 import 'package:flutter/material.dart';
 
-class CourseDetails extends StatefulWidget {
-  const CourseDetails({Key? key}) : super(key: key);
+class CourseDetailsSec extends StatefulWidget {
+  const CourseDetailsSec({Key? key}) : super(key: key);
 
   @override
   _CourseDetailsState createState() => _CourseDetailsState();
 }
 
-class _CourseDetailsState extends State<CourseDetails> {
+class _CourseDetailsState extends State<CourseDetailsSec> {
   List chapters = [
-    'Introduction to OS',
-    'Operating System',
-    'Linux',
-    'Kali Linux',
+    'Introduction to Bun',
+    'Bun JavaScript RunTime Environment',
+    'Bun JavaScript Core Engine',
+    'Getting Started with Bun',
   ];
 
   List topics = [
-    'Introduction to OS',
-    'Detailed Introduction to OS',
-    'Linux and its Distros',
-    'What is Kali Linux',
-    'Linux Commands',
+    'Introduction to Bun',
+    'BUN JRE',
+    'Bun JavaScript Core Engine / ZIG',
+    'Installation and Usage',
   ];
 
   @override
@@ -42,7 +41,7 @@ class _CourseDetailsState extends State<CourseDetails> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Penetration Testing'.toUpperCase(),
+              'Bun Modern JavaScript Runtime'.toUpperCase(),
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -53,12 +52,12 @@ class _CourseDetailsState extends State<CourseDetails> {
               contentPadding: EdgeInsets.all(0),
               leading: CircleAvatar(
                 backgroundImage:
-                    Image.asset('assets/images/instructor/Linus Torvalds.jpeg')
+                    Image.asset('assets/images/instructor/Jarred Sumner.jpeg')
                         .image,
                 backgroundColor: Colors.grey[300],
               ),
               title: Text(
-                'Linus Torvalds',
+                'Jarred Sumner',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 15,
@@ -89,7 +88,7 @@ class _CourseDetailsState extends State<CourseDetails> {
                 ),
               ),
               subtitle: Text(
-                '3rd Floor North Building, Room #3',
+                '4th Floor North Building, Room #9',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 12,
@@ -112,7 +111,7 @@ class _CourseDetailsState extends State<CourseDetails> {
                 ),
               ),
               subtitle: Text(
-                'Mon-Wed-Fri  9:00 am - 12:15 pm',
+                'Tue-Thu  10:00 am - 11:00 pm',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 12,

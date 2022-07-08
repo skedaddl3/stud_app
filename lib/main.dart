@@ -9,7 +9,7 @@ void main() {
       title: 'Student Demo',
       theme: ThemeData(
         // ignore: prefer_const_constructors
-        appBarTheme: AppBarTheme(color: const Color.fromRGBO(252, 252, 252, 1)),
+        appBarTheme: AppBarTheme(color: Color.fromARGB(255, 10, 21, 172)),
         primarySwatch: Colors.blue,
       ),
       home: const HomePage(),
@@ -25,7 +25,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Montfort Academy - Student Portal',
-            style: TextStyle(color: Color.fromARGB(255, 0, 0, 0))),
+            style: TextStyle(color: Color.fromARGB(255, 253, 247, 190))),
         centerTitle: true,
       ),
       // ignore: prefer_const_constructors

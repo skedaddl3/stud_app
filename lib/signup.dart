@@ -38,12 +38,13 @@ class _SignupState extends State<Signup> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blue,
         centerTitle: true,
-        title: Text('Register to Portal',
-            style: TextStyle(color: Color.fromARGB(255, 0, 0, 0))),
+        title:
+            Text('Register to Portal', style: TextStyle(color: Colors.white)),
         automaticallyImplyLeading: false,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -439,9 +440,10 @@ class _SignupState extends State<Signup> {
                   padding: const EdgeInsets.symmetric(horizontal: 50.0),
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.push(
+                      Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(builder: (context) => Dashboard()),
+                        (Route<dynamic> route) => false,
                       );
                     },
                     child: Container(
@@ -500,7 +502,7 @@ class _SignupState extends State<Signup> {
             colorScheme: ColorScheme.light(
               primary: Colors.blue, // header background color
               onPrimary: Colors.white, // header text color
-              onSurface: Color.fromARGB(255, 16, 219, 22), // body text color
+              onSurface: Colors.black, // body text color
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(

@@ -15,12 +15,13 @@ class _LogInPageState extends State<SecondRoute> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blue,
         centerTitle: true,
-        title: const Text('Login Portal',
-            style: TextStyle(color: Color.fromARGB(255, 0, 0, 0))),
+        title:
+            const Text('Login Portal', style: TextStyle(color: Colors.white)),
         automaticallyImplyLeading: false,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -103,10 +104,11 @@ class _LogInPageState extends State<SecondRoute> {
                 padding: const EdgeInsets.symmetric(horizontal: 50.0),
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.push(
+                    Navigator.pushAndRemoveUntil(
                       context,
-                      // ignore: prefer_const_constructors
-                      MaterialPageRoute(builder: (context) => Dashboard()),
+                      MaterialPageRoute(
+                          builder: (context) => const Dashboard()),
+                      (Route<dynamic> route) => false,
                     );
                   },
                   child: Container(

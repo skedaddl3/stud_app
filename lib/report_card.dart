@@ -2,14 +2,14 @@
 
 import 'package:flutter/material.dart';
 
-class CourseDetails extends StatefulWidget {
-  const CourseDetails({Key? key}) : super(key: key);
+class GradeDetails extends StatefulWidget {
+  const GradeDetails({Key? key}) : super(key: key);
 
   @override
   _CourseDetailsState createState() => _CourseDetailsState();
 }
 
-class _CourseDetailsState extends State<CourseDetails> {
+class _CourseDetailsState extends State<GradeDetails> {
   List chapters = [
     'Introduction to OS',
     'Operating System',
@@ -30,7 +30,8 @@ class _CourseDetailsState extends State<CourseDetails> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 66, 166, 248),
       appBar: AppBar(
-        title: Text('Course Details', style: TextStyle(color: Colors.white)),
+        title:
+            Text('Virtual Report Card', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.transparent,
         iconTheme: IconThemeData(color: Colors.white),
         elevation: 0,
@@ -119,6 +120,52 @@ class _CourseDetailsState extends State<CourseDetails> {
                 ),
               ),
             ),
+            ListTile(
+              contentPadding: EdgeInsets.all(0),
+              leading: Icon(
+                Icons.info_outline,
+                color: Colors.white,
+                size: 40.0,
+              ),
+              title: Text(
+                'Grades shown is for Current/Recent Semester',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              subtitle: Text(
+                '2 - 3 weeks process to see the updated Grades after semester ends',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                ),
+              ),
+            ),
+            ListTile(
+              contentPadding: EdgeInsets.all(0),
+              leading: Icon(
+                Icons.message,
+                color: Colors.white,
+                size: 40.0,
+              ),
+              title: Text(
+                'If Grades are blank, contact your Instructor',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              subtitle: Text(
+                'Or just wait for the grades being processed.',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                ),
+              ),
+            ),
             Padding(
               padding: EdgeInsets.only(top: 15),
             ),
@@ -141,39 +188,39 @@ class _CourseDetailsState extends State<CourseDetails> {
                         ),
                       ],
                     ),
-                    child: ListTile(
-                      leading: Container(
-                        padding: EdgeInsets.fromLTRB(10, 10, 0, 10),
-                        child: Text(
-                          '$index',
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      title: Text(
-                        chapters[index].toString().toUpperCase(),
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      subtitle: Text(
-                        topics[index],
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 14,
-                        ),
-                      ),
-                      trailing: Icon(
-                        Icons.chevron_right,
-                        size: 18,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
+                    // child: ListTile(
+                    //   leading: Container(
+                    //     padding: EdgeInsets.fromLTRB(10, 10, 0, 10),
+                    //     child: Text(
+                    //       '$index',
+                    //       style: TextStyle(
+                    //         color: Theme.of(context).primaryColor,
+                    //         fontSize: 18,
+                    //         fontWeight: FontWeight.bold,
+                    //       ),
+                    //     ),
+                    //   ),
+                    //   title: Text(
+                    //     chapters[index].toString().toUpperCase(),
+                    //     style: TextStyle(
+                    //       color: Colors.blue,
+                    //       fontSize: 18,
+                    //       fontWeight: FontWeight.bold,
+                    //     ),
+                    //   ),
+                    //   subtitle: Text(
+                    //     topics[index],
+                    //     style: TextStyle(
+                    //       color: Colors.grey,
+                    //       fontSize: 14,
+                    //     ),
+                    //   ),
+                    //   trailing: Icon(
+                    //     Icons.chevron_right,
+                    //     size: 18,
+                    //     color: Theme.of(context).primaryColor,
+                    //   ),
+                    // ),
                   );
                 },
               ),
