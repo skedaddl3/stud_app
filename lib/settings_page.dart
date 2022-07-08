@@ -13,15 +13,18 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        centerTitle: true,
+        title: const Text('Settings'),
+        backgroundColor: Colors.blue,
         elevation: 1,
         leading: IconButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
+          // ignore: prefer_const_constructors
           icon: Icon(
             Icons.arrow_back,
-            color: Colors.green,
+            color: Colors.white,
           ),
         ),
       ),
@@ -29,18 +32,18 @@ class _SettingsPageState extends State<SettingsPage> {
         padding: EdgeInsets.only(left: 16, top: 25, right: 16),
         child: ListView(
           children: [
-            Text(
-              "Settings",
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
-            ),
-            SizedBox(
-              height: 40,
-            ),
+            // Text(
+            //   "Settings",
+            //   style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+            // ),
+            // SizedBox(
+            //   height: 40,
+            // ),
             Row(
               children: [
                 Icon(
                   Icons.person,
-                  color: Colors.green,
+                  color: Colors.blue,
                 ),
                 SizedBox(
                   width: 8,
@@ -58,8 +61,8 @@ class _SettingsPageState extends State<SettingsPage> {
             SizedBox(
               height: 10,
             ),
-            buildAccountOptionRow(context, "Change password"),
-            buildAccountOptionRow(context, "Content settings"),
+            buildAccountOptionRow(context, "Request Change Password"),
+            buildAccountOptionRow(context, "Report Missing Student ID"),
             buildAccountOptionRow(context, "Social"),
             buildAccountOptionRow(context, "Language"),
             buildAccountOptionRow(context, "Privacy and security"),
@@ -70,7 +73,7 @@ class _SettingsPageState extends State<SettingsPage> {
               children: [
                 Icon(
                   Icons.volume_up_outlined,
-                  color: Colors.green,
+                  color: Colors.blue,
                 ),
                 SizedBox(
                   width: 8,
@@ -88,9 +91,9 @@ class _SettingsPageState extends State<SettingsPage> {
             SizedBox(
               height: 10,
             ),
-            buildNotificationOptionRow("New for you", true),
-            buildNotificationOptionRow("Account activity", true),
-            buildNotificationOptionRow("Opportunity", false),
+            buildNotificationOptionRow("New Subjects", false),
+            buildNotificationOptionRow("Account activity", false),
+            buildNotificationOptionRow("Grade Updates", false),
             SizedBox(
               height: 50,
             ),

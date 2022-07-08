@@ -38,6 +38,7 @@ dependencies:
   intl: ^0.17.0
   percent_indicator: ^4.2.2
   settings_ui: ^2.0.2
+  firebase_core: ^1.19.1
 
 dev_dependencies:
   flutter_test:

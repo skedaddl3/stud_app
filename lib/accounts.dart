@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:settings_ui/settings_ui.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:stud_app/settings_page.dart';
+
+// void main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await Firebase.initializeApp();
+//   runApp(Accounts());
+// }
 
 class Accounts extends StatefulWidget {
   const Accounts({Key? key}) : super(key: key);
@@ -11,6 +18,25 @@ class Accounts extends StatefulWidget {
 
 class _AccountsState extends State<Accounts> {
   bool showPassword = false;
+  // var db = FirebaseFirestore.instance;
+
+  // myget() async {
+  //   var d = await db.collection("users").get();
+  //   // print(d.docs[0].data());
+
+  //   for (var i in d.docs) {
+  //     // ignore: avoid_print
+  //     print(i.data());
+  //   }
+  // }
+
+  // final TextEditingController _nameController = TextEditingController();
+  // final TextEditingController _addressController = TextEditingController();
+  // final TextEditingController _birthdateController = TextEditingController();
+  // final TextEditingController _genderController = TextEditingController();
+  // final TextEditingController _numberController = TextEditingController();
+  // final TextEditingController _sectionController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,7 +128,15 @@ class _AccountsState extends State<Accounts> {
               const SizedBox(
                 height: 35,
               ),
-              buildTextField("Full Name", "Dor Alex", false),
+              // RaisedButton(
+              //   child: Text('get data'),
+              //   onPressed: () {
+              //     myget();
+              //     print("get data ...");
+              //   },
+              // ),
+
+              buildTextField("Full Name", "_users", false),
               buildTextField("E-mail", "alexd@gmail.com", false),
               buildTextField("Gender", "TLV, Israel", false),
               buildTextField("Contact Number", "TLV, Israel", false),
