@@ -7,6 +7,7 @@ import 'package:stud_app/report_card.dart';
 import 'package:stud_app/report_card2.dart';
 import 'package:stud_app/report_card3.dart';
 import 'course_details.dart';
+import 'package:stud_app/provider.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -54,6 +55,7 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+    GlobalData().fetchData(); // call function to load profiles data
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 66, 166, 248),
       appBar: AppBar(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show TextInputType;
+import 'package:stud_app/provider.dart';
 
 import 'dashboard.dart';
 
@@ -11,6 +12,8 @@ class SecondRoute extends StatefulWidget {
 }
 
 class _LogInPageState extends State<SecondRoute> {
+  late final TextEditingController _nameController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,8 +64,12 @@ class _LogInPageState extends State<SecondRoute> {
                   // ignore: prefer_const_constructors
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20.0),
-                    child: const TextField(
+                    child: TextField(
+                      controller: _nameController,
                       keyboardType: TextInputType.number,
+                      onChanged: (content) {
+                        GlobalData.checkExist(_nameController.text);
+                      },
                       decoration: InputDecoration(
                           border: InputBorder.none, hintText: 'Student ID'),
                       style: TextStyle(
@@ -104,12 +111,19 @@ class _LogInPageState extends State<SecondRoute> {
                 padding: const EdgeInsets.symmetric(horizontal: 50.0),
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const Dashboard()),
-                      (Route<dynamic> route) => false,
-                    );
+                    GlobalData.checkExist(_nameController
+                        .text); // Second call since exist is not initialized
+                    if (GlobalData.exist == true) {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Dashboard()),
+                        (Route<dynamic> route) => false,
+                      );
+                      print('Student ID found');
+                    } else if (GlobalData.exist == false) {
+                      print('Student ID doesnt exist');
+                    }
                   },
                   child: Container(
                     padding: const EdgeInsets.all(15.0),

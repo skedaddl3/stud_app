@@ -1,13 +1,8 @@
+import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:stud_app/provider.dart';
 import 'package:stud_app/settings_page.dart';
-
-// void main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   await Firebase.initializeApp();
-//   runApp(Accounts());
-// }
 
 class Accounts extends StatefulWidget {
   const Accounts({Key? key}) : super(key: key);
@@ -18,17 +13,7 @@ class Accounts extends StatefulWidget {
 
 class _AccountsState extends State<Accounts> {
   bool showPassword = false;
-  // var db = FirebaseFirestore.instance;
-
-  // myget() async {
-  //   var d = await db.collection("users").get();
-  //   // print(d.docs[0].data());
-
-  //   for (var i in d.docs) {
-  //     // ignore: avoid_print
-  //     print(i.data());
-  //   }
-  // }
+  var db = FirebaseFirestore.instance;
 
   // final TextEditingController _nameController = TextEditingController();
   // final TextEditingController _addressController = TextEditingController();
@@ -131,17 +116,32 @@ class _AccountsState extends State<Accounts> {
               // RaisedButton(
               //   child: Text('get data'),
               //   onPressed: () {
-              //     myget();
-              //     print("get data ...");
+              //     GlobalData().fetchData();
+              //     print("Obtaining Data");
               //   },
               // ),
 
-              buildTextField("Full Name", "_users", false),
-              buildTextField("E-mail", "alexd@gmail.com", false),
-              buildTextField("Gender", "TLV, Israel", false),
-              buildTextField("Contact Number", "TLV, Israel", false),
-              buildTextField("Address", "TLV, Israel", false),
-              buildTextField("Password", "********", true),
+              // StreamBuilder<Object>(
+              //     stream: FirebaseFirestore.instance
+              //         .collection('users')
+              //         .doc('184-0054')
+              //         .snapshots(),
+              //     builder: (context, snapshot) {
+              //       if (!snapshot.hasData) {
+              //         return const Center(
+              //           child: CircularProgressIndicator(),
+              //         );
+              //       }
+
+              //     }),
+              buildTextField("Full Name", "${GlobalData.userName}", false),
+              buildTextField("E-mail", "n/a", false),
+              buildTextField("Gender", "${GlobalData.gender}", false),
+              buildTextField(
+                  "Contact Number", "${GlobalData.contactNumber}", false),
+              buildTextField("Address", "${GlobalData.address}", false),
+              buildTextField("Password", "n/a", true),
+              buildTextField("BirthDate", "${GlobalData.birthDate}", false),
 
               const SizedBox(
                 height: 35,
