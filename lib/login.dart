@@ -28,7 +28,7 @@ class _LogInPageState extends State<SecondRoute> {
         _timer?.cancel();
       }
     });
-    EasyLoading.showSuccess('Use in initState');
+    // EasyLoading.showSuccess('Use in initState');
 
     // EasyLoading.instance
     //   ..displayDuration = Duration(seconds: 1)
@@ -154,22 +154,37 @@ class _LogInPageState extends State<SecondRoute> {
                       GlobalData.checkExist(_studIdController
                           .text); // Second call since exist is not initialized
                       if (GlobalData.exist == true) {
-                        EasyLoading.showSuccess('Student ID Found!',
-                            duration: const Duration(seconds: 2),
-                            maskType: EasyLoadingMaskType.clear);
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Dashboard()),
-                          (Route<dynamic> route) => false,
-                        );
-                        print('Student ID found');
+                        Timer(Duration(seconds: 3), () {
+                          EasyLoading.showSuccess('Student ID Found!',
+                              duration: const Duration(seconds: 2),
+                              maskType: EasyLoadingMaskType.black);
+                          Timer(Duration(seconds: 1), () {
+                            EasyLoading.instance.indicatorType =
+                                EasyLoadingIndicatorType.dualRing;
+                            EasyLoading.show(
+                              status: 'Logging In',
+                              maskType: EasyLoadingMaskType.black,
+                            );
+                            Timer(Duration(seconds: 1), () {
+                              EasyLoading.dismiss();
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Dashboard()),
+                                (Route<dynamic> route) => false,
+                              );
+                            });
+                          });
+
+                          print('Student ID found');
+                        });
                       } else if (GlobalData.exist == false) {
-                        EasyLoading.showError(
-                            'Student ID not found! Make sure you are enrolled.');
-                        duration:
-                        const Duration(seconds: 2);
-                        print('Student ID doesnt exist');
+                        Timer(const Duration(seconds: 3), () {
+                          EasyLoading.showError(
+                              'Student ID not found! Make sure you are enrolled.',
+                              maskType: EasyLoadingMaskType.black);
+                          print('Student ID doesnt exist');
+                        });
                       }
                     } on Exception catch (e) {
                       EasyLoading.showError(
