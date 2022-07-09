@@ -1,5 +1,8 @@
+import 'dart:async';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show TextInputType;
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:stud_app/provider.dart';
 
 import 'dashboard.dart';
@@ -12,7 +15,28 @@ class SecondRoute extends StatefulWidget {
 }
 
 class _LogInPageState extends State<SecondRoute> {
-  late final TextEditingController _nameController = TextEditingController();
+  Timer? _timer;
+  late double _progress;
+  late final TextEditingController _studIdController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    EasyLoading.addStatusCallback((status) {
+      print('EasyLoading Status $status');
+      if (status == EasyLoadingStatus.dismiss) {
+        _timer?.cancel();
+      }
+    });
+    EasyLoading.showSuccess('Use in initState');
+
+    // EasyLoading.instance
+    //   ..displayDuration = Duration(seconds: 1)
+    //   ..indicatorType = EasyLoadingIndicatorType.dualRing
+    //   ..animationDuration = Duration(seconds: 1);
+
+    // EasyLoading.removeCallbacks();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,10 +89,11 @@ class _LogInPageState extends State<SecondRoute> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20.0),
                     child: TextField(
-                      controller: _nameController,
+                      controller: _studIdController,
                       keyboardType: TextInputType.number,
                       onChanged: (content) {
-                        GlobalData.checkExist(_nameController.text);
+                        GlobalData.checkExist(_studIdController.text);
+                        GlobalData.currentStudId = _studIdController.text;
                       },
                       decoration: InputDecoration(
                           border: InputBorder.none, hintText: 'Student ID'),
@@ -110,19 +135,45 @@ class _LogInPageState extends State<SecondRoute> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 50.0),
                 child: GestureDetector(
-                  onTap: () {
-                    GlobalData.checkExist(_nameController
-                        .text); // Second call since exist is not initialized
-                    if (GlobalData.exist == true) {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Dashboard()),
-                        (Route<dynamic> route) => false,
+                  onTap: () async {
+                    try {
+                      EasyLoading.instance
+                        ..indicatorType =
+                            EasyLoadingIndicatorType.pouringHourGlass
+                        ..displayDuration = const Duration(seconds: 2)
+                        ..loadingStyle = EasyLoadingStyle.light
+                        ..indicatorColor = Colors.blue
+                        ..textColor = Colors.blue
+                        ..backgroundColor = Colors.white;
+                      _timer?.cancel();
+                      await EasyLoading.show(
+                        status: 'Searching Student ID Records',
+                        maskType: EasyLoadingMaskType.black,
                       );
-                      print('Student ID found');
-                    } else if (GlobalData.exist == false) {
-                      print('Student ID doesnt exist');
+
+                      GlobalData.checkExist(_studIdController
+                          .text); // Second call since exist is not initialized
+                      if (GlobalData.exist == true) {
+                        EasyLoading.showSuccess('Student ID Found!',
+                            duration: const Duration(seconds: 2),
+                            maskType: EasyLoadingMaskType.clear);
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Dashboard()),
+                          (Route<dynamic> route) => false,
+                        );
+                        print('Student ID found');
+                      } else if (GlobalData.exist == false) {
+                        EasyLoading.showError(
+                            'Student ID not found! Make sure you are enrolled.');
+                        duration:
+                        const Duration(seconds: 2);
+                        print('Student ID doesnt exist');
+                      }
+                    } on Exception catch (e) {
+                      EasyLoading.showError(
+                          'Please input valid credentials. $e');
                     }
                   },
                   child: Container(

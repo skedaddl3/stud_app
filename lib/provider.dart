@@ -8,12 +8,12 @@ class GlobalData {
   static String? birthDate;
   static String? section;
   static late bool exist;
-  static String? studId;
+  static String? currentStudId;
 
   fetchData() async {
     // var d = await db.collection("users").doc("184-0054").get();
     var collection = FirebaseFirestore.instance.collection('users');
-    var docSnapshot = await collection.doc("184-0054").get();
+    var docSnapshot = await collection.doc("$currentStudId").get();
     Map<String, dynamic> data = docSnapshot.data()!;
 
     userName = data['name'];
@@ -23,7 +23,7 @@ class GlobalData {
     birthDate = data['birthdate'];
     section = data['section'];
 
-    print(userName);
+    print("Logged Student ID: $currentStudId");
     // for (var i in d.docs) {
     //   // ignore: avoid_print
     //   print(i.data());
