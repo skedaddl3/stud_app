@@ -18,6 +18,7 @@ class _LogInPageState extends State<SecondRoute> {
   Timer? _timer;
   late double _progress;
   late final TextEditingController _studIdController = TextEditingController();
+  late final TextEditingController _passController = TextEditingController();
 
   @override
   void initState() {
@@ -95,9 +96,9 @@ class _LogInPageState extends State<SecondRoute> {
                         GlobalData.checkExist(_studIdController.text);
                         GlobalData.currentStudId = _studIdController.text;
                       },
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           border: InputBorder.none, hintText: 'Student ID'),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18.0,
                       ),
                     ),
@@ -118,12 +119,17 @@ class _LogInPageState extends State<SecondRoute> {
                   // ignore: prefer_const_constructors
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20.0),
-                    child: const TextField(
+                    child: TextField(
+                      controller: _passController,
+                      onChanged: (content) {
+                        GlobalData.checkPass(_passController.text);
+                        GlobalData.currentStudPass = _passController.text;
+                      },
                       obscureText: true,
                       obscuringCharacter: '●',
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           border: InputBorder.none, hintText: 'Password'),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18.0,
                       ),
                     ),
@@ -150,35 +156,48 @@ class _LogInPageState extends State<SecondRoute> {
                         status: 'Searching Student ID Records',
                         maskType: EasyLoadingMaskType.black,
                       );
+                      GlobalData.checkPass(_passController.text);
 
                       GlobalData.checkExist(_studIdController
                           .text); // Second call since exist is not initialized
-                      if (GlobalData.exist == true) {
-                        Timer(Duration(seconds: 3), () {
+                      if (GlobalData.exist == true &&
+                          GlobalData.passCheck == true) {
+                        Timer(const Duration(seconds: 3), () {
                           EasyLoading.showSuccess('Student ID Found!',
                               duration: const Duration(seconds: 2),
                               maskType: EasyLoadingMaskType.black);
-                          Timer(Duration(seconds: 1), () {
+
+                          Timer(const Duration(seconds: 1), () {
                             EasyLoading.instance.indicatorType =
-                                EasyLoadingIndicatorType.dualRing;
+                                EasyLoadingIndicatorType.fadingCircle;
                             EasyLoading.show(
-                              status: 'Logging In',
+                              status: 'Checking Password',
                               maskType: EasyLoadingMaskType.black,
                             );
-                            Timer(Duration(seconds: 1), () {
-                              EasyLoading.dismiss();
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const Dashboard()),
-                                (Route<dynamic> route) => false,
+
+                            Timer(const Duration(seconds: 3), () {
+                              EasyLoading.instance.indicatorType =
+                                  EasyLoadingIndicatorType.dualRing;
+                              EasyLoading.show(
+                                status: 'Logging In',
+                                maskType: EasyLoadingMaskType.black,
                               );
+                              Timer(const Duration(seconds: 1), () {
+                                EasyLoading.dismiss();
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const Dashboard()),
+                                  (Route<dynamic> route) => false,
+                                );
+                              });
                             });
                           });
 
                           print('Student ID found');
                         });
-                      } else if (GlobalData.exist == false) {
+                      } else if (GlobalData.exist == false ||
+                          GlobalData.passCheck == false) {
                         Timer(const Duration(seconds: 3), () {
                           EasyLoading.showError(
                               'Student ID not found! Make sure you are enrolled.',
