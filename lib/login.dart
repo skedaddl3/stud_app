@@ -3,6 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show TextInputType;
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stud_app/provider.dart';
 
 import 'dashboard.dart';
@@ -182,8 +183,14 @@ class _LogInPageState extends State<SecondRoute> {
                                 status: 'Logging In',
                                 maskType: EasyLoadingMaskType.black,
                               );
-                              Timer(const Duration(seconds: 1), () {
+                              Timer(const Duration(seconds: 1), () async {
                                 EasyLoading.dismiss();
+                                SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                prefs.setString(
+                                    'id', '$GlobalData.currentStudId');
+                                debugPrint(
+                                    'Display ID: ${prefs.get('id').toString()}');
                                 Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(

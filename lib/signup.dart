@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -25,14 +26,21 @@ class _SignupState extends State<Signup> {
   ];
 
   final List<String> itemsGender = [
-    'Male ♂️',
-    'Female ♀️',
+    'Male',
+    'Female',
   ];
   String? selectedValueSection;
   String? selectedValueGender;
 
   late DateTime _selectedDate;
-  final TextEditingController _textEditingController = TextEditingController();
+  final TextEditingController _birthdate = TextEditingController();
+  late final TextEditingController _name = TextEditingController();
+  late final TextEditingController _section = TextEditingController();
+  late final TextEditingController _address = TextEditingController();
+  late final TextEditingController _gender = TextEditingController();
+  late final TextEditingController _number = TextEditingController();
+  late final TextEditingController _password = TextEditingController();
+  late final TextEditingController _passwordConfirm = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +95,8 @@ class _SignupState extends State<Signup> {
                     // ignore: prefer_const_constructors
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20.0),
-                      child: const TextField(
+                      child: TextField(
+                        controller: _name,
                         keyboardType: TextInputType.name,
                         decoration: InputDecoration(
                             border: InputBorder.none,
@@ -111,6 +120,7 @@ class _SignupState extends State<Signup> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 0.0),
                     child: DropdownButton2(
+                      searchController: _section,
                       isExpanded: true,
                       hint: Row(
                         children: const [
@@ -204,7 +214,8 @@ class _SignupState extends State<Signup> {
                     // ignore: prefer_const_constructors
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20.0),
-                      child: const TextField(
+                      child: TextField(
+                        controller: _address,
                         keyboardType: TextInputType.streetAddress,
                         decoration: InputDecoration(
                             border: InputBorder.none,
@@ -243,7 +254,7 @@ class _SignupState extends State<Signup> {
                           fontSize: 14.0,
                         ),
                         focusNode: AlwaysDisabledFocusNode(),
-                        controller: _textEditingController,
+                        controller: _birthdate,
                         onTap: () {
                           _selectDate(context);
                         },
@@ -262,6 +273,7 @@ class _SignupState extends State<Signup> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 0.0),
                     child: DropdownButton2(
+                      searchController: _gender,
                       isExpanded: true,
                       hint: Row(
                         children: const [
@@ -362,7 +374,8 @@ class _SignupState extends State<Signup> {
                     // ignore: prefer_const_constructors
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20.0),
-                      child: const TextField(
+                      child: TextField(
+                        controller: _number,
                         keyboardType: TextInputType.phone,
                         decoration: InputDecoration(
                             border: InputBorder.none,
@@ -389,7 +402,8 @@ class _SignupState extends State<Signup> {
                     // ignore: prefer_const_constructors
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20.0),
-                      child: const TextField(
+                      child: TextField(
+                        controller: _password,
                         obscureText: true,
                         obscuringCharacter: '●',
                         decoration: InputDecoration(
@@ -419,7 +433,8 @@ class _SignupState extends State<Signup> {
                     // ignore: prefer_const_constructors
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20.0),
-                      child: const TextField(
+                      child: TextField(
+                        controller: _passwordConfirm,
                         obscureText: true,
                         obscuringCharacter: '●',
                         decoration: InputDecoration(
@@ -440,11 +455,26 @@ class _SignupState extends State<Signup> {
                   padding: const EdgeInsets.symmetric(horizontal: 50.0),
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => Dashboard()),
-                        (Route<dynamic> route) => false,
-                      );
+                      var collection =
+                          FirebaseFirestore.instance.collection('users');
+                      collection
+                          .doc('184-0056') // <-- Document ID
+                          .set({
+                            'name': _name.text,
+                            'gender': selectedValueGender,
+                            'birthdate': _birthdate.text,
+                            'address': _address.text,
+                            'password': _password.text,
+                            'section': selectedValueSection,
+                            'number': _number.text,
+                          })
+                          .then((_) => print('Data Added'))
+                          .catchError((error) => print('Add failed: $error'));
+                      // Navigator.pushAndRemoveUntil(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => Dashboard()),
+                      //   (Route<dynamic> route) => false,
+                      // );
                     },
                     child: Container(
                       padding: const EdgeInsets.all(15.0),
@@ -517,11 +547,10 @@ class _SignupState extends State<Signup> {
 
     if (newSelectedDate != null) {
       _selectedDate = newSelectedDate;
-      _textEditingController
+      _birthdate
         ..text = DateFormat.yMMMd().format(_selectedDate)
         ..selection = TextSelection.fromPosition(TextPosition(
-            offset: _textEditingController.text.length,
-            affinity: TextAffinity.upstream));
+            offset: _birthdate.text.length, affinity: TextAffinity.upstream));
     }
   }
 }

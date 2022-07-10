@@ -1,12 +1,18 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:stud_app/dashboard.dart';
+import 'package:stud_app/provider.dart';
 import 'package:stud_app/signup.dart' show Signup;
 import 'package:stud_app/login.dart' show SecondRoute;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  GlobalData.id = prefs.getString('id');
+  debugPrint(GlobalData.id);
   await Firebase.initializeApp();
   runApp(
     MaterialApp(
@@ -16,7 +22,7 @@ void main() async {
         appBarTheme: AppBarTheme(color: Color.fromARGB(255, 10, 21, 172)),
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(),
+      home: GlobalData.id == null ? const HomePage() : const Dashboard(),
       builder: EasyLoading.init(),
     ),
   );

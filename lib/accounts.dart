@@ -45,7 +45,7 @@ class _AccountsState extends State<Accounts> {
             ),
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => SettingsPage()));
+                  builder: (BuildContext context) => const SettingsPage()));
             },
           ),
         ],

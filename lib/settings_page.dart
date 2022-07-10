@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stud_app/main.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -100,24 +101,28 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             Center(
               child: OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20)),
-                ),
-                onPressed: () {
-                  onTap:
-                  () {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => const HomePage()),
-                      (Route<dynamic> route) => false,
-                    );
-                  };
+                // style: OutlinedButton.styleFrom(
+                //   shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.circular(20)),
+                // ),
+                onPressed: () async {
+                  print('Testing Button');
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  debugPrint('Removing ID: ${prefs.get('id').toString()}');
+                  prefs.remove('id');
+                  print(prefs.toString());
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomePage()),
+                    (Route<dynamic> route) => false,
+                  );
                 },
-                child: Text("SIGN OUT",
+                child: const Text("Log Out",
                     style: TextStyle(
                         fontSize: 16, letterSpacing: 2.2, color: Colors.black)),
               ),
+
               // padding: EdgeInsets.symmetric(horizontal: 40),
               // shape: RoundedRectangleBorder(
               //     borderRadius: BorderRadius.circular(20)),

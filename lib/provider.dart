@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class GlobalData {
+  static String? id; // prefs storage
   static String? userName;
   static String? gender;
   static int? contactNumber;
@@ -10,7 +12,7 @@ class GlobalData {
   static String? section;
   static late bool exist = false;
   static late bool passCheck = false;
-  static String? currentStudId;
+  static String? currentStudId = id; // stored in sharedpreferences
   static String? currentStudPass;
   static String? storePass;
 
