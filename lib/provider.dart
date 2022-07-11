@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class GlobalData {
-  static String? id; // prefs storage
+  static late String? id; // prefs storage
   static String? userName;
   static String? gender;
   static int? contactNumber;
@@ -17,6 +17,8 @@ class GlobalData {
   static String? storePass;
 
   fetchData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.getString('id');
     // var d = await db.collection("users").doc("184-0054").get();
     var collection = FirebaseFirestore.instance.collection('users');
     var docSnapshot = await collection.doc("$currentStudId").get();

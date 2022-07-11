@@ -188,7 +188,7 @@ class _LogInPageState extends State<SecondRoute> {
                                 SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
                                 prefs.setString(
-                                    'id', '$GlobalData.currentStudId');
+                                    'id', '${GlobalData.currentStudId}');
                                 debugPrint(
                                     'Display ID: ${prefs.get('id').toString()}');
                                 Navigator.pushAndRemoveUntil(
