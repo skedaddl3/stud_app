@@ -11,7 +11,6 @@ import 'package:stud_app/login.dart' show SecondRoute;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  GlobalData().fetchData();
   GlobalData.id = prefs.getString('id');
   debugPrint(GlobalData.id);
   await Firebase.initializeApp();

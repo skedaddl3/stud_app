@@ -85,6 +85,7 @@ class _DashboardState extends State<Dashboard> {
               ),
             ),
             onTap: () {
+              GlobalData().fetchData();
               Navigator.push(
                 context,
                 MaterialPageRoute(

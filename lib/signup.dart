@@ -1,10 +1,17 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stud_app/dashboard.dart';
+import 'package:stud_app/login.dart';
+import 'package:stud_app/main.dart';
+import 'package:stud_app/provider.dart';
 
 class Signup extends StatefulWidget {
   const Signup({Key? key}) : super(key: key);
@@ -33,14 +40,14 @@ class _SignupState extends State<Signup> {
   String? selectedValueGender;
 
   late DateTime _selectedDate;
-  final TextEditingController _birthdate = TextEditingController();
+  late final TextEditingController _birthdate = TextEditingController();
   late final TextEditingController _name = TextEditingController();
   late final TextEditingController _section = TextEditingController();
   late final TextEditingController _address = TextEditingController();
   late final TextEditingController _gender = TextEditingController();
   late final TextEditingController _number = TextEditingController();
   late final TextEditingController _password = TextEditingController();
-  late final TextEditingController _passwordConfirm = TextEditingController();
+  late final TextEditingController _studIdController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -165,7 +172,7 @@ class _SignupState extends State<Signup> {
                       value: selectedValueSection,
                       onChanged: (value) {
                         setState(() {
-                          selectedValueGender = value as String;
+                          selectedValueSection = value as String;
                         });
                       },
                       icon: const Icon(Icons.arrow_drop_down),
@@ -409,7 +416,7 @@ class _SignupState extends State<Signup> {
                         decoration: InputDecoration(
                             border: InputBorder.none,
                             icon: Icon(Icons.security),
-                            hintText: ' Create a Password'),
+                            hintText: 'Create a Password'),
                         style: TextStyle(
                           fontSize: 14.0,
                         ),
@@ -434,13 +441,12 @@ class _SignupState extends State<Signup> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20.0),
                       child: TextField(
-                        controller: _passwordConfirm,
-                        obscureText: true,
-                        obscuringCharacter: '●',
+                        controller: _studIdController,
+                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                             border: InputBorder.none,
                             icon: Icon(Icons.verified_user_outlined),
-                            hintText: ' Confirm Password'),
+                            hintText: 'Student ID: (e.g. 184-0054)'),
                         style: TextStyle(
                           fontSize: 14.0,
                         ),
@@ -455,21 +461,61 @@ class _SignupState extends State<Signup> {
                   padding: const EdgeInsets.symmetric(horizontal: 50.0),
                   child: GestureDetector(
                     onTap: () {
+                      FocusScope.of(context).requestFocus(FocusNode());
+                      EasyLoading.instance.indicatorType =
+                          EasyLoadingIndicatorType.fadingCircle;
+                      EasyLoading.show(
+                        status: 'Creating Account',
+                        maskType: EasyLoadingMaskType.black,
+                      );
                       var collection =
                           FirebaseFirestore.instance.collection('users');
                       collection
-                          .doc('184-0056') // <-- Document ID
+                          .doc('${_studIdController.text}') // <-- Document ID
                           .set({
-                            'name': _name.text,
-                            'gender': selectedValueGender,
-                            'birthdate': _birthdate.text,
-                            'address': _address.text,
-                            'password': _password.text,
-                            'section': selectedValueSection,
-                            'number': _number.text,
-                          })
-                          .then((_) => print('Data Added'))
-                          .catchError((error) => print('Add failed: $error'));
+                        'name': _name.text,
+                        'gender': selectedValueGender.toString(),
+                        'birthdate': _birthdate.text,
+                        'address': _address.text,
+                        'password': _password.text,
+                        'section': selectedValueSection.toString(),
+                        'number': int.tryParse(_number.text),
+                      }).then(
+                        (_) => Timer(
+                          const Duration(seconds: 3),
+                          () async {
+                            GlobalData().fetchData();
+                            EasyLoading.showSuccess('Registration Successful',
+                                duration: const Duration(seconds: 2),
+                                maskType: EasyLoadingMaskType.black);
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            prefs.setString(
+                                'id', '${GlobalData.currentStudId}');
+                            debugPrint(
+                                'Display ID: ${prefs.get('id').toString()}');
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SecondRoute()),
+                              (Route<dynamic> route) => false,
+                            )
+                                // debugPrint('Data Added'));
+                                .catchError(
+                              (error) => Timer(
+                                const Duration(seconds: 3),
+                                () {
+                                  EasyLoading.showError('Registration Failed',
+                                      maskType: EasyLoadingMaskType.black);
+                                  print(
+                                      'Registration Failed with Errors: $error');
+                                },
+                              ),
+                            );
+                            // debugPrint('Add failed: $error'));
+                          },
+                        ),
+                      );
                       // Navigator.pushAndRemoveUntil(
                       //   context,
                       //   MaterialPageRoute(builder: (context) => Dashboard()),

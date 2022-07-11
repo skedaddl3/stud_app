@@ -14,7 +14,6 @@ class Accounts extends StatefulWidget {
 class _AccountsState extends State<Accounts> {
   bool showPassword = false;
   var db = FirebaseFirestore.instance;
-
   // final TextEditingController _nameController = TextEditingController();
   // final TextEditingController _addressController = TextEditingController();
   // final TextEditingController _birthdateController = TextEditingController();
@@ -135,12 +134,12 @@ class _AccountsState extends State<Accounts> {
 
               //     }),
               buildTextField("Full Name", "${GlobalData.userName}", false),
-              buildTextField("E-mail", "n/a", false),
+              buildTextField("Section", "${GlobalData.section}", false),
               buildTextField("Gender", "${GlobalData.gender}", false),
-              buildTextField(
-                  "Contact Number", "${GlobalData.contactNumber}", false),
+              buildTextField("Contact Number",
+                  "${GlobalData.contactNumber.toString()}", false),
               buildTextField("Address", "${GlobalData.address}", false),
-              buildTextField("Password", "n/a", true),
+              buildTextField("Password", "${GlobalData.currentStudPass}", true),
               buildTextField("BirthDate", "${GlobalData.birthDate}", false),
 
               const SizedBox(

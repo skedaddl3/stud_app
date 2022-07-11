@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class GlobalData {
@@ -18,10 +17,10 @@ class GlobalData {
 
   fetchData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.getString('id');
+    id = prefs.get('id').toString();
     // var d = await db.collection("users").doc("184-0054").get();
     var collection = FirebaseFirestore.instance.collection('users');
-    var docSnapshot = await collection.doc("$currentStudId").get();
+    var docSnapshot = await collection.doc("$id").get();
     Map<String, dynamic> data = docSnapshot.data()!;
 
     userName = data['name'];

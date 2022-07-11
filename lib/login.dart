@@ -143,7 +143,9 @@ class _LogInPageState extends State<SecondRoute> {
                 padding: const EdgeInsets.symmetric(horizontal: 50.0),
                 child: GestureDetector(
                   onTap: () async {
+                    FocusScope.of(context).requestFocus(FocusNode());
                     try {
+                      GlobalData().fetchData();
                       EasyLoading.instance
                         ..indicatorType =
                             EasyLoadingIndicatorType.pouringHourGlass
