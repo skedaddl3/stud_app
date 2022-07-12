@@ -63,6 +63,7 @@ class GlobalData {
       // print('Checking Password');
       // return passCheck;
       passCheck = map['password'].toString().contains(passArg);
+
       return passCheck;
     } catch (e) {
       // If any error

@@ -1,11 +1,14 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stud_app/main.dart';
-import 'package:stud_app/provider.dart';
+import 'package:stud_app/firestore_db/provider.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -68,9 +71,10 @@ class _SettingsPageState extends State<SettingsPage> {
             const SizedBox(
               height: 10,
             ),
+            buildAccountOptionRowId(
+                context, "Student ID: ${GlobalData.currentStudId}"),
             buildAccountOptionRow(context, "Request Change Password"),
             buildAccountOptionRow(context, "Report Missing Student ID"),
-            buildAccountOptionRow(context, "Social"),
             buildAccountOptionRow(context, "Language"),
             buildAccountOptionRow(context, "Privacy and security"),
             buildAccountOptionRow1(context, "Delete Account"),
@@ -113,17 +117,26 @@ class _SettingsPageState extends State<SettingsPage> {
                 //       borderRadius: BorderRadius.circular(20)),
                 // ),
                 onPressed: () async {
-                  debugPrint('Testing Button');
-                  SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                  debugPrint('Removing ID: ${prefs.get('id').toString()}');
-                  prefs.remove('id');
-                  print(prefs.toString());
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomePage()),
-                    (Route<dynamic> route) => false,
+                  EasyLoading.instance.indicatorType =
+                      EasyLoadingIndicatorType.fadingCircle;
+                  EasyLoading.show(
+                    status: 'Logging Out',
+                    maskType: EasyLoadingMaskType.black,
                   );
+                  Timer(const Duration(seconds: 3), () async {
+                    debugPrint('Testing Button');
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    debugPrint('Removing ID: ${prefs.get('id').toString()}');
+                    prefs.remove('id');
+                    debugPrint(prefs.toString());
+                    EasyLoading.dismiss();
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => const HomePage()),
+                      (Route<dynamic> route) => false,
+                    );
+                  });
                 },
                 child: const Text("Log Out",
                     style: TextStyle(
@@ -175,27 +188,37 @@ class _SettingsPageState extends State<SettingsPage> {
                 // ignore: unnecessary_new
                 new FlatButton(
                   onPressed: () async {
-                    Navigator.of(context, rootNavigator: true).pop(
-                        false); // dismisses only the dialog and returns false
-                    final collection =
-                        FirebaseFirestore.instance.collection('users');
-                    collection
-                        .doc(
-                            '${GlobalData.currentStudId}') // <-- Doc ID to be deleted.
-                        .delete() // <-- Delete
-                        .then((_) => debugPrint('Deleted'))
-                        .catchError(
-                            (error) => debugPrint('Delete failed: $error'));
-                    SharedPreferences prefs =
-                        await SharedPreferences.getInstance();
-                    debugPrint('Removing ID: ${prefs.get('id').toString()}');
-                    prefs.remove('id');
-                    debugPrint(prefs.toString());
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => const HomePage()),
-                      (Route<dynamic> route) => false,
+                    EasyLoading.instance.indicatorType =
+                        EasyLoadingIndicatorType.dualRing;
+                    EasyLoading.show(
+                      status: 'Deleting Account...',
+                      maskType: EasyLoadingMaskType.black,
                     );
+                    Timer(const Duration(seconds: 3), () async {
+                      Navigator.of(context, rootNavigator: true).pop(
+                          false); // dismisses only the dialog and returns false
+                      final collection =
+                          FirebaseFirestore.instance.collection('users');
+                      collection
+                          .doc(
+                              '${GlobalData.currentStudId}') // <-- Doc ID to be deleted.
+                          .delete() // <-- Delete
+                          .then((_) => debugPrint('Deleted'))
+                          .catchError(
+                              (error) => debugPrint('Delete failed: $error'));
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      debugPrint('Removing ID: ${prefs.get('id').toString()}');
+                      prefs.remove('id');
+                      EasyLoading.dismiss();
+                      debugPrint(prefs.toString());
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomePage()),
+                        (Route<dynamic> route) => false,
+                      );
+                    });
                   },
                   child: const Text('Yes'),
                 ),
@@ -275,6 +298,56 @@ class _SettingsPageState extends State<SettingsPage> {
             const Icon(
               Icons.folder_delete,
               color: Colors.red,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  GestureDetector buildAccountOptionRowId(BuildContext context, String title) {
+    return GestureDetector(
+      onTap: () {
+        // showDialog(
+        //     context: context,
+        //     builder: (BuildContext context) {
+        //       return AlertDialog(
+        //         title: Text(title),
+        //         content: Column(
+        //           mainAxisSize: MainAxisSize.min,
+        //           // ignore: prefer_const_literals_to_create_immutables
+        //           children: [
+        //             const Text("Option 1 N/A"),
+        //             const Text("Option 2 N/A"),
+        //             const Text("Option 3 N/A"),
+        //           ],
+        //         ),
+        //         actions: [
+        //           FlatButton(
+        //               onPressed: () {
+        //                 Navigator.of(context).pop();
+        //               },
+        //               child: const Text("Close")),
+        //         ],
+        //       );
+        //     });
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+              ),
+            ),
+            const Icon(
+              Icons.person,
+              color: Colors.black,
             ),
           ],
         ),

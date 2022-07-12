@@ -3,8 +3,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:stud_app/dashboard.dart';
-import 'package:stud_app/provider.dart';
+import 'package:stud_app/logged/dashboard.dart';
+import 'package:stud_app/firestore_db/provider.dart';
 import 'package:stud_app/signup.dart' show Signup;
 import 'package:stud_app/login.dart' show SecondRoute;
 

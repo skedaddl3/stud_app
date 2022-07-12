@@ -8,10 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stud_app/dashboard.dart';
+import 'package:stud_app/logged/dashboard.dart';
 import 'package:stud_app/login.dart';
 import 'package:stud_app/main.dart';
-import 'package:stud_app/provider.dart';
+import 'package:stud_app/firestore_db/provider.dart';
 
 class Signup extends StatefulWidget {
   const Signup({Key? key}) : super(key: key);

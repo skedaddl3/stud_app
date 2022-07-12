@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show TextInputType;
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stud_app/provider.dart';
+import 'package:stud_app/firestore_db/provider.dart';
 
-import 'dashboard.dart';
+import 'logged/dashboard.dart';
 
 class SecondRoute extends StatefulWidget {
   const SecondRoute({super.key});

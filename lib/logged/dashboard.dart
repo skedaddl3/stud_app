@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:stud_app/accounts.dart';
-import 'package:stud_app/course_details2.dart';
-import 'package:stud_app/course_details3.dart';
-import 'package:stud_app/report_card.dart';
-import 'package:stud_app/report_card2.dart';
-import 'package:stud_app/report_card3.dart';
-import 'course_details.dart';
-import 'package:stud_app/provider.dart';
+import 'package:stud_app/logged/accounts.dart';
+import 'package:stud_app/course_details/course_details2.dart';
+import 'package:stud_app/course_details/course_details3.dart';
+import 'package:stud_app/report_card/report_card.dart';
+import 'package:stud_app/report_card/report_card2.dart';
+import 'package:stud_app/report_card/report_card3.dart';
+import '../course_details/course_details.dart';
+import 'package:stud_app/firestore_db/provider.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);

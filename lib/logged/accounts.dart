@@ -1,8 +1,11 @@
+import 'dart:async';
 import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:stud_app/provider.dart';
-import 'package:stud_app/settings_page.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:stud_app/logged/dashboard.dart';
+import 'package:stud_app/firestore_db/provider.dart';
+import 'package:stud_app/logged/settings_page.dart';
 
 class Accounts extends StatefulWidget {
   const Accounts({Key? key}) : super(key: key);
@@ -316,43 +319,56 @@ class _AccountsState extends State<Accounts> {
 
                   RaisedButton(
                     onPressed: () {
-                      if (_nameController.text == "") {
-                        _nameController.text = GlobalData.userName!;
-                      }
-                      if (_genderController.text == "") {
-                        _genderController.text = GlobalData.gender!;
-                      }
-                      if (_birthdateController.text == "") {
-                        _birthdateController.text = GlobalData.birthDate!;
-                      }
-                      if (_addressController.text == "") {
-                        _addressController.text = GlobalData.address!;
-                      }
-                      if (_sectionController.text == "") {
-                        _sectionController.text = GlobalData.section!;
-                      }
-                      if (_numberController.text == "") {
-                        _numberController.text =
-                            GlobalData.contactNumber.toString();
-                      }
-                      if (_passwordController.text == "") {
-                        _passwordController.text = GlobalData.currentStudPass!;
-                      }
-                      var users =
-                          FirebaseFirestore.instance.collection('users');
-                      users
-                          .doc('${GlobalData.currentStudId}')
-                          .update({
-                            'name': _nameController.text,
-                            'gender': _genderController.text,
-                            'birthdate': _birthdateController.text,
-                            'address': _addressController.text,
-                            'password': _passwordController.text,
-                            'section': _sectionController.text,
-                            'number': int.tryParse(_numberController.text),
-                          }) // <-- Updated data
-                          .then((_) => debugPrint('Success'))
-                          .catchError((error) => debugPrint('Failed: $error'));
+                      EasyLoading.instance.indicatorType =
+                          EasyLoadingIndicatorType.fadingCircle;
+                      EasyLoading.show(
+                        status: 'Updating',
+                        maskType: EasyLoadingMaskType.black,
+                      );
+                      Timer(const Duration(seconds: 3), () async {
+                        EasyLoading.dismiss();
+                        if (_nameController.text == "") {
+                          _nameController.text = GlobalData.userName!;
+                        }
+                        if (_genderController.text == "") {
+                          _genderController.text = GlobalData.gender!;
+                        }
+                        if (_birthdateController.text == "") {
+                          _birthdateController.text = GlobalData.birthDate!;
+                        }
+                        if (_addressController.text == "") {
+                          _addressController.text = GlobalData.address!;
+                        }
+                        if (_sectionController.text == "") {
+                          _sectionController.text = GlobalData.section!;
+                        }
+                        if (_numberController.text == "") {
+                          _numberController.text =
+                              GlobalData.contactNumber.toString();
+                        }
+                        if (_passwordController.text == "") {
+                          _passwordController.text =
+                              GlobalData.currentStudPass!;
+                        }
+                        var users =
+                            FirebaseFirestore.instance.collection('users');
+                        users
+                            .doc('${GlobalData.currentStudId}')
+                            .update({
+                              'name': _nameController.text,
+                              'gender': _genderController.text,
+                              'birthdate': _birthdateController.text,
+                              'address': _addressController.text,
+                              'password': _passwordController.text,
+                              'section': _sectionController.text,
+                              'number': int.tryParse(_numberController.text),
+                            }) // <-- Updated data
+                            .then((_) => debugPrint('Success'))
+                            .catchError(
+                                (error) => debugPrint('Failed: $error'));
+
+                        Navigator.of(context).pop();
+                      });
                     },
                     color: Colors.blue,
                     padding: const EdgeInsets.symmetric(horizontal: 20),
