@@ -14,12 +14,13 @@ class Accounts extends StatefulWidget {
 class _AccountsState extends State<Accounts> {
   bool showPassword = false;
   var db = FirebaseFirestore.instance;
-  // final TextEditingController _nameController = TextEditingController();
-  // final TextEditingController _addressController = TextEditingController();
-  // final TextEditingController _birthdateController = TextEditingController();
-  // final TextEditingController _genderController = TextEditingController();
-  // final TextEditingController _numberController = TextEditingController();
-  // final TextEditingController _sectionController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _birthdateController = TextEditingController();
+  final TextEditingController _genderController = TextEditingController();
+  final TextEditingController _numberController = TextEditingController();
+  final TextEditingController _sectionController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +111,7 @@ class _AccountsState extends State<Accounts> {
                 ),
               ),
               const SizedBox(
-                height: 35,
+                height: 10,
               ),
               // RaisedButton(
               //   child: Text('get data'),
@@ -133,17 +134,168 @@ class _AccountsState extends State<Accounts> {
               //       }
 
               //     }),
-              buildTextField("Full Name", "${GlobalData.userName}", false),
-              buildTextField("Section", "${GlobalData.section}", false),
-              buildTextField("Gender", "${GlobalData.gender}", false),
-              buildTextField("Contact Number",
-                  "${GlobalData.contactNumber.toString()}", false),
-              buildTextField("Address", "${GlobalData.address}", false),
-              buildTextField("Password", "${GlobalData.currentStudPass}", true),
-              buildTextField("BirthDate", "${GlobalData.birthDate}", false),
+              TextField(
+                controller: _nameController,
+                decoration: InputDecoration(
+                  labelText: '${GlobalData.userName}',
+                  hintText: 'Name',
+                  labelStyle: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+
+              TextField(
+                controller: _sectionController,
+                decoration: InputDecoration(
+                  labelText: '${GlobalData.section}',
+                  hintText: 'Section',
+                  labelStyle: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+
+              TextField(
+                controller: _genderController,
+                decoration: InputDecoration(
+                  labelText: '${GlobalData.gender}',
+                  hintText: 'Gender',
+                  labelStyle: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+
+              TextField(
+                controller: _numberController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  hintText: 'Number',
+                  labelText: '${GlobalData.contactNumber.toString()}',
+                  labelStyle: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+
+              TextField(
+                controller: _addressController,
+                decoration: InputDecoration(
+                  labelText: '${GlobalData.address}',
+                  hintText: 'Address',
+                  labelStyle: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+
+              TextField(
+                controller: _passwordController,
+                decoration: InputDecoration(
+                  hintText: 'Password',
+                  labelText: '${GlobalData.currentStudPass}',
+                  labelStyle: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+
+              TextField(
+                controller: _birthdateController,
+                decoration: InputDecoration(
+                  hintText: 'Birth Date',
+                  labelText: '${GlobalData.birthDate}',
+                  labelStyle: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+
+              // buildTextField("Section", "${GlobalData.section}", false),
+              // buildTextField("Gender", "${GlobalData.gender}", false),
+              // buildTextField("Contact Number",
+              //     "${GlobalData.contactNumber.toString()}", false),
+              // buildTextField("Address", "${GlobalData.address}", false),
+              // buildTextField("Password", "${GlobalData.currentStudPass}", true),
+              // buildTextField("BirthDate", "${GlobalData.birthDate}", false),
 
               const SizedBox(
-                height: 35,
+                height: 30,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -163,14 +315,52 @@ class _AccountsState extends State<Accounts> {
                   // padding: const EdgeInsets.symmetric(horizontal: 50),
 
                   RaisedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (_nameController.text == "") {
+                        _nameController.text = GlobalData.userName!;
+                      }
+                      if (_genderController.text == "") {
+                        _genderController.text = GlobalData.gender!;
+                      }
+                      if (_birthdateController.text == "") {
+                        _birthdateController.text = GlobalData.birthDate!;
+                      }
+                      if (_addressController.text == "") {
+                        _addressController.text = GlobalData.address!;
+                      }
+                      if (_sectionController.text == "") {
+                        _sectionController.text = GlobalData.section!;
+                      }
+                      if (_numberController.text == "") {
+                        _numberController.text =
+                            GlobalData.contactNumber.toString();
+                      }
+                      if (_passwordController.text == "") {
+                        _passwordController.text = GlobalData.currentStudPass!;
+                      }
+                      var users =
+                          FirebaseFirestore.instance.collection('users');
+                      users
+                          .doc('${GlobalData.currentStudId}')
+                          .update({
+                            'name': _nameController.text,
+                            'gender': _genderController.text,
+                            'birthdate': _birthdateController.text,
+                            'address': _addressController.text,
+                            'password': _passwordController.text,
+                            'section': _sectionController.text,
+                            'number': int.tryParse(_numberController.text),
+                          }) // <-- Updated data
+                          .then((_) => debugPrint('Success'))
+                          .catchError((error) => debugPrint('Failed: $error'));
+                    },
                     color: Colors.blue,
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     elevation: 2,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                     child: const Text(
-                      "Save",
+                      "Update",
                       style: TextStyle(
                           fontSize: 14,
                           letterSpacing: 2.2,

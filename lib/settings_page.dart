@@ -1,7 +1,11 @@
+// ignore_for_file: deprecated_member_use
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stud_app/main.dart';
+import 'package:stud_app/provider.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -31,7 +35,7 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 16, top: 25, right: 16),
+        padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
         child: ListView(
           children: [
             // Text(
@@ -43,24 +47,25 @@ class _SettingsPageState extends State<SettingsPage> {
             // ),
             Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.person,
                   color: Colors.blue,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
-                Text(
+                const Text(
                   "Account",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
-            Divider(
+            const Divider(
               height: 15,
               thickness: 2,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             buildAccountOptionRow(context, "Request Change Password"),
@@ -68,35 +73,37 @@ class _SettingsPageState extends State<SettingsPage> {
             buildAccountOptionRow(context, "Social"),
             buildAccountOptionRow(context, "Language"),
             buildAccountOptionRow(context, "Privacy and security"),
-            SizedBox(
+            buildAccountOptionRow1(context, "Delete Account"),
+            const SizedBox(
               height: 40,
             ),
             Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.volume_up_outlined,
                   color: Colors.blue,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
-                Text(
+                const Text(
                   "Notifications",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
-            Divider(
+            const Divider(
               height: 15,
               thickness: 2,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             buildNotificationOptionRow("New Subjects", false),
             buildNotificationOptionRow("Account activity", false),
             buildNotificationOptionRow("Grade Updates", false),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             Center(
@@ -106,7 +113,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 //       borderRadius: BorderRadius.circular(20)),
                 // ),
                 onPressed: () async {
-                  print('Testing Button');
+                  debugPrint('Testing Button');
                   SharedPreferences prefs =
                       await SharedPreferences.getInstance();
                   debugPrint('Removing ID: ${prefs.get('id').toString()}');
@@ -154,6 +161,127 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
+  GestureDetector buildAccountOptionRow1(BuildContext context, String title) {
+    return GestureDetector(
+      onTap: () async {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Delete Account'),
+              content: const Text(
+                  'This action cannot be undone. Are you sure you want to delete your account?'),
+              actions: <Widget>[
+                // ignore: unnecessary_new
+                new FlatButton(
+                  onPressed: () async {
+                    Navigator.of(context, rootNavigator: true).pop(
+                        false); // dismisses only the dialog and returns false
+                    final collection =
+                        FirebaseFirestore.instance.collection('users');
+                    collection
+                        .doc(
+                            '${GlobalData.currentStudId}') // <-- Doc ID to be deleted.
+                        .delete() // <-- Delete
+                        .then((_) => debugPrint('Deleted'))
+                        .catchError(
+                            (error) => debugPrint('Delete failed: $error'));
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    debugPrint('Removing ID: ${prefs.get('id').toString()}');
+                    prefs.remove('id');
+                    debugPrint(prefs.toString());
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => const HomePage()),
+                      (Route<dynamic> route) => false,
+                    );
+                  },
+                  child: const Text('Yes'),
+                ),
+                FlatButton(
+                  onPressed: () async {
+                    Navigator.of(context, rootNavigator: true).pop(
+                        true); // dismisses only the dialog and returns true
+                  },
+                  child: const Text('No'),
+                ),
+              ],
+            );
+          },
+        );
+
+        // showAlertDialog(BuildContext context) {
+        //   // set up the buttons
+        //   Widget cancelButton = TextButton(
+        //     child: const Text("Cancel"),
+        //     onPressed: () {},
+        //   );
+        //   Widget continueButton = TextButton(
+        //     child: const Text("Continue"),
+        //     onPressed: () async {
+        //       final collection = FirebaseFirestore.instance.collection('users');
+        //       collection
+        //           .doc(
+        //               '${GlobalData.currentStudId}') // <-- Doc ID to be deleted.
+        //           .delete() // <-- Delete
+        //           .then((_) => debugPrint('Deleted'))
+        //           .catchError((error) => debugPrint('Delete failed: $error'));
+        //       SharedPreferences prefs = await SharedPreferences.getInstance();
+        //       debugPrint('Removing ID: ${prefs.get('id').toString()}');
+        //       prefs.remove('id');
+        //       debugPrint(prefs.toString());
+        //       Navigator.pushAndRemoveUntil(
+        //         context,
+        //         MaterialPageRoute(builder: (context) => const HomePage()),
+        //         (Route<dynamic> route) => false,
+        //       );
+        //     },
+        //   );
+
+        //   // set up the AlertDialog
+        //   AlertDialog alert = AlertDialog(
+        //     title: const Text("AlertDialog"),
+        //     content: const Text(
+        //         "Are you sure you want to delete your account? This action cannot be undone."),
+        //     actions: [
+        //       cancelButton,
+        //       continueButton,
+        //     ],
+        //   );
+
+        //   // show the dialog
+        //   showDialog(
+        //     context: context,
+        //     builder: (BuildContext context) {
+        //       return alert;
+        //     },
+        //   );
+        // }
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+              ),
+            ),
+            const Icon(
+              Icons.folder_delete,
+              color: Colors.red,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   GestureDetector buildAccountOptionRow(BuildContext context, String title) {
     return GestureDetector(
       onTap: () {
@@ -164,10 +292,11 @@ class _SettingsPageState extends State<SettingsPage> {
                 title: Text(title),
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
+                  // ignore: prefer_const_literals_to_create_immutables
                   children: [
-                    Text("Option 1"),
-                    Text("Option 2"),
-                    Text("Option 3"),
+                    const Text("Option 1 N/A"),
+                    const Text("Option 2 N/A"),
+                    const Text("Option 3 N/A"),
                   ],
                 ),
                 actions: [
@@ -175,7 +304,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: Text("Close")),
+                      child: const Text("Close")),
                 ],
               );
             });
@@ -193,7 +322,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 color: Colors.grey[600],
               ),
             ),
-            Icon(
+            const Icon(
               Icons.arrow_forward_ios,
               color: Colors.grey,
             ),
