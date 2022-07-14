@@ -62,7 +62,7 @@ class GlobalData {
       // passCheck = docSnapshot.data()!.containsValue(currentStudPass);
       // print('Checking Password');
       // return passCheck;
-      passCheck = map['password'].toString().contains(passArg);
+      passCheck = map['password'] == passArg;
 
       return passCheck;
     } catch (e) {
