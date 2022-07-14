@@ -19,6 +19,27 @@ Added my alma mater as an App Theme for the User Interface.
 - [x] Persistent Storage: When App is closed, the account will stay logged in.
   - [x] Student ID
 
+ <p>
+
+  <img src="https://i.ibb.co/xDdRPqY/Screenshot-2022-07-13-01-07-47-1564947548.png" width="290" height="530">
+
+  <img src="https://i.ibb.co/NycTZ1h/Screenshot-2022-07-13-01-07-55-1389970904.png" width="290" height="530">
+  
+  <img src="https://media.giphy.com/media/hLxwcWvHESTKUzgdcj/giphy.gif" width="290" height="530">
+  
+  <img src="https://i.ibb.co/sHL2LyG/Screenshot-2022-07-13-01-08-01-1692264526.png" width="290" height="530">
+  
+  <img src="https://i.ibb.co/SJcqc7D/Screenshot-2022-07-13-01-08-36-1125510613.png" width="290" height="530">
+  <img src="https://i.ibb.co/8XHjYKh/Screenshot-2022-07-13-01-08-43-0740008162.png" width="290" height="530">
+  <img src="https://i.ibb.co/7tpSb39/Screenshot-2022-07-13-01-08-50-2134443217.png" width="290" height="530">
+  <img src="https://i.ibb.co/NpPfJGq/Screenshot-2022-07-13-01-08-57-0588137934.png" width="290" height="530">
+  <img src="https://i.ibb.co/dLR9qv1/Screenshot-2022-07-13-01-09-23-1454397490.png" width="290" height="530">
+  <img src="https://i.ibb.co/pW1T97t/Screenshot-2022-07-13-01-09-30-0444180911.png" width="290" height="530">
+  
+
+
+</p>
+  
 ### SDK Version
 
 `Flutter SDK (LSP): 3.0.4`
